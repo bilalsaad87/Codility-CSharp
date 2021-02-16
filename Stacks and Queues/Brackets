@@ -1,0 +1,61 @@
+using System;
+using System.Collections;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(string S) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+        if (S.Length % 2 != 0) return 0;
+
+        Stack charStack = new Stack();
+
+        for (int i = 0; i < S.Length; i++)
+        {
+            char currentChar = S[i];
+            if (isOpeningBracket(currentChar))
+            {
+                charStack.Push(currentChar);
+            }
+            else
+            {
+                //adding closing bracket to empty stack will never become properly nested
+                if (charStack.Count == 0)
+                {
+                    return 0;
+                }
+                char poppedChar = Convert.ToChar(charStack.Pop());
+                if (isBracketMatch(poppedChar, currentChar))
+                {
+                    continue;
+                }
+                else return 0;
+            }
+        }
+        if (charStack.Count == 0) return 1;
+
+        return 0;
+    }
+
+    bool isOpeningBracket(char pC)
+    {
+        if (pC == '[' || pC == '(' || pC == '{')
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool isBracketMatch(char pC1, char pC2)
+    {
+        if (pC1 == '[' && pC2 == ']') return true;
+        if (pC1 == '(' && pC2 == ')') return true;
+        if (pC1 == '{' && pC2 == '}') return true;
+
+        return false;
+    }
+    
+}
