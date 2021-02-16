@@ -1,0 +1,36 @@
+using System;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(int M, int[] A) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+         int N = A.Length;
+            // the counter array for every element in the array A
+            int[] counters = new int[M + 1];
+            int head = 0;
+            int tail = 0;
+            int result = 0;
+            while (tail < N)
+            {
+                // find the most right end of the array for each tail
+                while (head < N && counters[A[head]] != 2)
+                {
+                    counters[A[head]]++;
+                    if (counters[A[head]] == 2)
+                        break;
+                    head++;
+                }
+                result += head - tail;
+                if (result > 1000000000)
+                    return 1000000000;
+                // set the counter of the element before tail to be 0
+                counters[A[tail]] = 0;
+                tail++;
+            }
+            return result;
+    }
+}
