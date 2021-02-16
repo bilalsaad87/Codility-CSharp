@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+        SortedSet<int> testedSet = new SortedSet<int>();
+        SortedSet<int> prefectSet = new SortedSet<int>();
+
+        for(int i = 0; i < A.Length; i++)
+        {
+            testedSet.Add(A[i]);
+            prefectSet.Add(i+1);
+        }
+
+        foreach(int current in prefectSet)
+        {
+            if (!testedSet.Contains(current)) { return 0; }
+        }
+        return 1;
+    }
+}
