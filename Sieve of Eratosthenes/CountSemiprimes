@@ -1,0 +1,62 @@
+using System;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int[] solution(int N, int[] P, int[] Q) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+        int length = P.Length;
+        int[] prime = sieve(N);
+        int[] semiprime = semiprimeMth(prime);
+        int[] result = new int[length];
+        int[] semiprimesAggreation = new int[N + 1];
+
+        for (int i = 1; i < N + 1; i++)
+        {
+            semiprimesAggreation[i] = semiprime[i];
+            semiprimesAggreation[i] += semiprimesAggreation[i - 1];
+        }
+
+        for (int i = 0; i < length; i++)
+        {
+            result[i] = semiprimesAggreation[Q[i]] - semiprimesAggreation[P[i]] + semiprime[P[i]];
+        }
+        return result;
+    }
+
+    public int[] sieve(int N)
+    {
+        int[] prime = new int[N + 1];
+        for (int i = 2; i <= (double)Math.Sqrt(N); i++)
+        {
+            if (prime[i] == 0)
+            {
+                int k = i * i;
+                while (k <= N)
+                {
+                    if (prime[k] == 0)
+                    {
+                        prime[k] = i;
+                    }
+                    k += i;
+                }
+            }
+        }
+        return prime;
+    }
+
+    public int[] semiprimeMth(int[] prime)
+    {
+        int[] semiprime = new int[prime.Length];
+        for (int i = 0; i < prime.Length; i++)
+        {
+            if (prime[i] == 0) continue;
+            int firstFactor = prime[i];
+            if (prime[i / firstFactor] == 0) semiprime[i] = 1;
+        }
+        return semiprime;
+    }
+}
