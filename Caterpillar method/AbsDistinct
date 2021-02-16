@@ -1,0 +1,53 @@
+using System;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+         int N = A.Length;
+            int head = 0;
+            int tail = N - 1;
+            int result = 1;
+            // the current maximal value
+            int currMaxValue = Math.Max(Math.Abs(A[head]), Math.Abs(A[tail]));
+            // we should be careful of the minimal integer number in JAVA, because
+            // the absolute value of it is still a negative number.
+            if (A[head] == int.MinValue)
+                currMaxValue = Math.Abs(A[head]);
+            while (head <= tail)
+            {
+                int currHead = Math.Abs(A[head]);
+                // the same value of the current maximal value should not be counted
+                if (currHead == currMaxValue)
+                {
+                    head++;
+                    continue;
+                }
+                int currTail = Math.Abs(A[tail]);
+                // the same value of the current maximal value should not be counted
+                if (currTail == currMaxValue)
+                {
+                    tail--;
+                    continue;
+                }
+                // get the new current maximal value
+                if (currHead >= currTail)
+                {
+                    currMaxValue = currHead;
+                    head++;
+                }
+                else
+                {
+                    currMaxValue = currTail;
+                    tail--;
+                }
+                // meet a new distinct absolute value
+                result++;
+            }
+            return result;
+    }
+}
