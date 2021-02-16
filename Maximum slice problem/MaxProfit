@@ -1,0 +1,37 @@
+using System;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+        //for empty array or 1 element array, no profit can be realized
+        if (A.Length < 2) return 0; 
+
+        //convert profit table to delta table so can use max slice technique
+        int[] deltaA = new int[A.Length];
+        deltaA[0] = 0;
+        for (int i = 1; i < A.Length; i++)
+        {
+            deltaA[i] = A[i] - A[i - 1];
+        }
+
+        int absoluteMax = deltaA[0];
+        int localMax = deltaA[0];
+        int nextSum = 0;
+        int currentElement = 0;
+
+        for (int i = 1; i < deltaA.Length; i++) { 
+            currentElement = deltaA[i]; 
+            nextSum = localMax + currentElement; 
+            localMax = Math.Max(deltaA[i], nextSum); 
+            absoluteMax = Math.Max(absoluteMax, localMax); 
+        }
+        if (absoluteMax > 0) return absoluteMax;
+
+        return 0;
+    }
+}
