@@ -1,0 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+        List<int> aList = new List<int>();
+        for (int i = 0; i < A.Length; i++)
+        {
+            aList.Add(A[i]);
+        }
+        aList.Sort();
+
+        int product1, product2, product3, product4 = 0;
+        //first 3 elements
+        product1 = aList[0] * aList[1] * aList[2]; 
+        //last 3 elements
+        product2 = aList[aList.Count - 3] * aList[aList.Count - 2] * aList[aList.Count - 1]; 
+        //first 2 and last element
+        product3 = aList[0] * aList[1] * aList[aList.Count - 1]; 
+        //first and last 2 elements
+        product4 = aList[0] * aList[aList.Count - 2] * aList[aList.Count - 1]; 
+
+        int max1 = Math.Max(product1, product2);
+        int max2 = Math.Max(product3, product4);
+
+        return Math.Max(max1, max2);
+    }
+}
