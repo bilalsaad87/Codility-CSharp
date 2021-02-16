@@ -1,0 +1,52 @@
+using System;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(int[] A, int[] B) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+          int count = 0;
+        for (int i = 0; i < A.Length; i++)
+        {
+            if (hasSamePrimeDivisors(A[i], B[i]))
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    public int gcd(int a, int b)
+    {
+        if (a % b == 0) return b;
+        return gcd(b, a % b);
+    }
+
+    public bool hasSamePrimeDivisors(int A, int B)
+    {
+        int gcdValue = gcd(A, B);
+        int gcdA;
+        int gcdB;
+        while (A != 1)
+        {
+            gcdA = gcd(A, gcdValue);
+            if (gcdA == 1)
+                break;
+            A = A / gcdA;
+        }
+        if (A != 1)
+        {
+            return false;
+        }
+        while (B != 1)
+        {
+            gcdB = gcd(B, gcdValue);
+            if (gcdB == 1)
+                break;
+            B = B / gcdB;
+        }
+        return B == 1;
+    }
+}
