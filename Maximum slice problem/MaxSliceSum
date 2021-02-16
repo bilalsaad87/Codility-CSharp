@@ -1,0 +1,25 @@
+using System;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+        int absoluteMax = A[0];
+        int localMax = A[0];
+        int nextSum = 0;
+        int currentElement = 0;
+
+        for (int i = 1; i < A.Length; i++)
+        {
+            currentElement = A[i];
+            nextSum = localMax + currentElement;
+            localMax = Math.Max(A[i], nextSum);
+            absoluteMax = Math.Max(absoluteMax, localMax);
+        }
+        return absoluteMax;
+    }
+}
