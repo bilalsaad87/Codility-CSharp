@@ -1,0 +1,72 @@
+using System;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+        
+        if (A.Length == 0)
+        {
+            return 0;
+        }
+        int sum = 0;
+        int max = int.MinValue;
+        // O(N)
+        for (int i = 0; i < A.Length; i++)
+        {
+            int value = Math.Abs(A[i]);
+            sum += value;
+            if (max < value)
+            {
+                max = value;
+            }
+            A[i] = value;
+        }
+
+        int[] counts = new int[max + 1];
+        foreach (int value in A)
+        {
+            counts[value]++;
+        }
+
+
+        int[] r = new int[sum + 1];
+        for (int i = 1; i < r.Length; i++)
+        {
+            r[i] = -1;
+        }
+
+        for (int i = 1; i < counts.Length; i++)
+        {
+
+            for (int j = 0; j < r.Length; j++)
+            {
+                // negative value means we haven't reached this value, so we have to spend 1 current if we can
+                if (r[j] >= 0)
+                {
+                    r[j] = counts[i];
+                }
+                else if (j - i >= 0 && r[j - i] > 0)
+                {
+                    r[j] = r[j - i] - 1;
+                }
+                // the value in r[j] then means how many of the current values are left when we reached the value j
+            }
+        }
+        int result = sum;
+        // don't have to traverse all the arrays, since i - the sum of elements. if it's reachable then (sum - i) - reachable as well.
+        // so if the value is reachable then the diff is abs(i - (sum - i)), which is the same as abs(sum - 2 * i)
+        for (int i = 0; i < r.Length / 2 + 1; i++)
+        {
+            if (r[i] >= 0 && result > Math.Abs(sum - 2 * i))
+            {
+                result = Math.Abs(sum - 2 * i);
+            }
+        }
+        return result;
+    }
+}
