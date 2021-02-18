@@ -1,0 +1,41 @@
+using System;
+// you can also use other imports, for example:
+// using System.Collections.Generic;
+
+// you can write to stdout for debugging purposes, e.g.
+// Console.WriteLine("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in C# 6.0 with .NET 4.5 (Mono)
+        
+            int[] dp = new int[A.Length];
+            dp[0] = A[0];
+
+            // build up from "dp[1], dp[2], ..., dp[A.length-1]"
+            for (int i = 1; i < A.Length; i++)
+            {
+
+                // keep the biggest one 
+                // be very careful: could be negtive (so use Integer.MIN_VALUE)
+                int max = int.MinValue;
+
+                // a die could be "1 to 6" 
+                for (int die = 1; die <= 6; die++)
+                {
+                    if (i - die >= 0)
+                    {
+                        // very important: not "A[i-die]+A[i]"
+                        // instead, have to use "dp[i-die]+A[i]"
+                        max = Math.Max(dp[i - die] + A[i], max);
+                        // dynamic programming:
+                        // take the best:
+                        // takeBest( dp[i-j] + value[j], curBest )
+                    }
+                }
+                dp[i] = max; // keep the best one as the dp value    
+            }
+
+            return dp[A.Length - 1];
+    }
+}
